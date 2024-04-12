@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:memorigame_project/screen/game.dart';
+import 'package:memorigame_project/screen/highscore.dart';
+import 'package:memorigame_project/screen/login.dart';
 
 void main() {
   runApp(const MyApp());
@@ -31,7 +34,12 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Memory Image Game'),
+      routes: {
+        'highscore': (context) => Highscore(),
+        'login': (context) => Login(),
+        // 'game': (context) => Game(),
+      },
     );
   }
 }
@@ -56,6 +64,36 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+
+  Widget funWidgetDrawer() {
+    return Drawer(
+      elevation: 16.0,
+      child: Column(
+        children: <Widget>[
+          UserAccountsDrawerHeader(
+            accountName: Text("xyz"),
+            accountEmail: Text(""),
+            // currentAccountPicture: CircleAvatar(
+            //     backgroundImage: NetworkImage("https://i.pravatar.cc/150"))
+          ),
+          ListTile(
+            title: new Text("High Score"),
+            leading: new Icon(Icons.leaderboard),
+            onTap: () {
+              Navigator.popAndPushNamed(context, 'highscore');
+            },
+          ),
+          ListTile(
+            title: new Text("Logout"),
+            leading: new Icon(Icons.logout),
+            onTap: () {
+              Navigator.popAndPushNamed(context, 'login');
+            },
+          )
+        ],
+      ),
+    );
+  }
 
   void _incrementCounter() {
     setState(() {
@@ -106,20 +144,19 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Text(
-              'You have pushed the button this many times:',
+              'Tutorial\n1.Game akan menampilkan 5 gambar secara acak dan bergantian dan diingat oleh pemain\n',
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => Game()));
+              },
+              child: Text('Play GAME'),
             ),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
+      drawer: funWidgetDrawer(),
     );
   }
 }
