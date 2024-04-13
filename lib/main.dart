@@ -2,9 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:memorigame_project/screen/game.dart';
 import 'package:memorigame_project/screen/highscore.dart';
 import 'package:memorigame_project/screen/login.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+String active_user = "";
+Future<String> checkUser() async {
+  final prefs = await SharedPreferences.getInstance();
+  String user_id = prefs.getString("user_id") ?? '';
+  return user_id;
+}
 
 void main() {
-  runApp(const MyApp());
+  // runApp(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  checkUser().then((String result) {
+    if (result == '')
+      runApp(MyLogin());
+    else {
+      active_user = result;
+      runApp(MyApp());
+    }
+  });
 }
 
 class MyApp extends StatelessWidget {
@@ -71,7 +88,7 @@ class _MyHomePageState extends State<MyHomePage> {
       child: Column(
         children: <Widget>[
           UserAccountsDrawerHeader(
-            accountName: Text("xyz"),
+            accountName: Text(active_user),
             accountEmail: Text(""),
             // currentAccountPicture: CircleAvatar(
             //     backgroundImage: NetworkImage("https://i.pravatar.cc/150"))
@@ -87,12 +104,18 @@ class _MyHomePageState extends State<MyHomePage> {
             title: new Text("Logout"),
             leading: new Icon(Icons.logout),
             onTap: () {
-              Navigator.popAndPushNamed(context, 'login');
+              doLogout();
             },
           )
         ],
       ),
     );
+  }
+
+  void doLogout() async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.remove("user_id");
+    main();
   }
 
   void _incrementCounter() {
