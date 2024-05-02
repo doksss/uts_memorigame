@@ -23,7 +23,7 @@ class _GameState extends State<Game> {
   int _point = 0;
   int _jumlahquest = 1;
   int _questno = 0;
-  int _maxTime = 60;
+  int _maxTime = 30;
   int _hitung = 0;
   bool animated = false;
   bool animatedWidget = true;
@@ -90,44 +90,20 @@ class _GameState extends State<Game> {
     super.initState();
   }
 
-  // @override
-  // void dispose() {
-  //   _timerProgress.cancel();
-  //   _hitung = 0;
-  //   super.dispose();
-  // }
-
   void startTimer() {
     _hitung = _maxTime;
-    _timerProgress = Timer.periodic(Duration(milliseconds: 100), (timer) {
+    _timerProgress = Timer.periodic(Duration(milliseconds: 1000), (timer) {
       setState(() {
         if (_hitung == 0) {
-          // finishQuiz();
           _questno++;
           _jumlahquest++;
           _hitung = _maxTime;
-          // _timer.cancel();
-          // showDialog<String>(
-          //     context: context,
-          //     builder: (BuildContext context) => AlertDialog(
-          //           title: Text('Quiz'),
-          //           content: Text('Quiz Ended' + '\nYour point = $_point'),
-          //           actions: <Widget>[
-          //             TextButton(
-          //               onPressed: () => Navigator.pop(context, 'OK'),
-          //               child: const Text('OK'),
-          //             ),
-          //           ],
-          //         ));
-          // _questno = 0;
         } else {
           _hitung--;
         }
         if (_jumlahquest > 5) {
           finishQuiz();
         }
-
-        // _hitung--;
       });
     });
   }
@@ -150,7 +126,6 @@ class _GameState extends State<Game> {
       _jumlahquest++;
       _questno++;
       if (_jumlahquest > 5) finishQuiz();
-      // _question_no++;
       _hitung = _maxTime;
     });
   }
@@ -249,7 +224,11 @@ class _GameState extends State<Game> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Quiz Memori'),
+        title: Text('Quiz Memori',
+        style: TextStyle(
+      fontWeight: FontWeight.bold, // Memberikan gaya tebal pada teks
+    ),),
+        backgroundColor: Colors.cyan,
       ),
       body: Center(
           child: Column(
@@ -262,14 +241,21 @@ class _GameState extends State<Game> {
             progressColor: Colors.green,
             backgroundColor: Colors.red,
           ),
-          AnimatedSwitcher(
-            duration: const Duration(seconds: 1),
-            transitionBuilder: (Widget child, Animation<double> animation) {
-              // return RotationTransition(child: child, turns: animation);
-              return ScaleTransition(child: child, scale: animation);
-            },
-            child: animatedWidget ? widget1() : widget2(),
-          )
+          Card(
+            elevation: 5,
+            margin: EdgeInsets.all(10),
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: AnimatedSwitcher(
+                duration: const Duration(seconds: 1),
+                transitionBuilder:
+                    (Widget child, Animation<double> animation) {
+                  return ScaleTransition(child: child, scale: animation);
+                },
+                child: animatedWidget ? widget1() : widget2(),
+              ),
+            ),
+          ),
         ],
       )),
     );

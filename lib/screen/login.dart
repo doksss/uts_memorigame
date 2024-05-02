@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:memorigame_project/main.dart';
 
-
-
-
 class MyLogin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -39,7 +36,13 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Login'),
+          title: Text(
+            'Login',
+            style: TextStyle(
+              fontWeight: FontWeight.bold, // Memberikan gaya tebal pada teks
+            ),
+          ),
+          backgroundColor: Colors.cyan,
         ),
         body: Container(
           height: 300,
@@ -96,4 +99,3 @@ class _LoginState extends State<Login> {
         ));
   }
 }
-

@@ -56,15 +56,15 @@ void checkingLeaderboard() {
     }
     if (namaDitemukan == false) {
       String players = "";
-      for (int i = 0; i < player.length-1; i ++) {
+      for (int i = 0; i < player.length - 1; i++) {
         players += player[i] + ",";
       }
       players += active_user + "," + skor_sementara.toString() + ",";
       hapusPrefLeaderboard();
       saveLeaderboard(players);
-    }else{
+    } else {
       String players = "";
-      for (int i = 0; i < player.length-1; i ++) {
+      for (int i = 0; i < player.length - 1; i++) {
         players += player[i] + ",";
       }
       hapusPrefLeaderboard();
@@ -125,7 +125,12 @@ class _HasilState extends State<Hasil> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Result Page'),
+        title: const Text(
+          'Result Page',
+          style: TextStyle(
+            fontWeight: FontWeight.bold, // Memberikan gaya tebal pada teks
+          ),
+        ),
         backgroundColor: Colors.cyan,
       ),
       body: Center(
@@ -144,6 +149,7 @@ class _HasilState extends State<Hasil> {
                 height: 300,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
+                    color: Colors.white,
                     border: Border.all(width: 1, color: Colors.black),
                     borderRadius: BorderRadius.all(Radius.circular(10))),
                 child: Column(

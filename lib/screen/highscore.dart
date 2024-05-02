@@ -49,7 +49,7 @@ class _HighscoreState extends State<Highscore> {
             if (int.parse(listSkor[j]) < int.parse(listSkor[j + 1])) {
               String namaTemp = listNama[j + 1];
               String skorTemp = listSkor[j + 1];
-              listNama[j + 1] =listNama[j];
+              listNama[j + 1] = listNama[j];
               listSkor[j + 1] = listSkor[j];
               listNama[j] = namaTemp;
               listSkor[j] = skorTemp;
@@ -58,15 +58,15 @@ class _HighscoreState extends State<Highscore> {
         }
       }
       if (player.length < 4) {
-          number1 = "1." + listNama[0] + "-" + listSkor[0];
-        } else if (player.length < 6) {
-          number1 = "1." + listNama[0] + "-" + listSkor[0];
-          number2 = "2." + listNama[1] + "-" + listSkor[1];
-        } else {
-          number1 = "1." + listNama[0] + "-" + listSkor[0];
-          number2 = "2." + listNama[1] + "-" + listSkor[1];
-          number3 = "3." + listNama[2] + "-" + listSkor[2];
-        }
+        number1 = listNama[0] + "-" + listSkor[0];
+      } else if (player.length < 6) {
+        number1 = listNama[0] + "-" + listSkor[0];
+        number2 = listNama[1] + "-" + listSkor[1];
+      } else {
+        number1 = listNama[0] + "-" + listSkor[0];
+        number2 = listNama[1] + "-" + listSkor[1];
+        number3 = listNama[2] + "-" + listSkor[2];
+      }
     }
   }
 
@@ -75,57 +75,85 @@ class _HighscoreState extends State<Highscore> {
     sortingLeaderboard();
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Result Page'),
+        title: const Text(
+          'Result Page',
+          style: TextStyle(
+            fontWeight: FontWeight.bold, // Memberikan gaya tebal pada teks
+          ),
+        ),
         backgroundColor: Colors.cyan,
       ),
       body: Center(
-          child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text("LEADERBOARD",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                padding: EdgeInsets.all(5),
-                margin: EdgeInsets.all(10),
-                width: 600,
-                height: 300,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                    border: Border.all(width: 1, color: Colors.black),
-                    borderRadius: BorderRadius.all(Radius.circular(10))),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      number1 + "\n" + number2 + "\n" + number3,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 14),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        ElevatedButton(
-                            onPressed: () {
-                              Navigator.pop(context); //menutup layar ini
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          MyApp())); //membuka layar hasil UTAMA
-                            },
-                            child: Text("MAIN MENU")),
-                      ],
-                    )
-                  ],
-                ),
-              ),
-            ],
-          )
-        ],
-      )),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              "LEADERBOARD",
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            ),
+            SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                HighScoreCard(rankImage: "assets/images/rank-2.png", playerName: number2),
+                HighScoreCard(rankImage: "assets/images/rank-1.png", playerName: number1),
+                HighScoreCard(rankImage: "assets/images/rank-3.png", playerName: number3),
+              ],
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context); //menutup layar ini
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MyApp(),
+                  ),
+                ); //membuka layar hasil UTAMA
+              },
+              child: Text("MAIN MENU"),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class HighScoreCard extends StatelessWidget {
+  final String rankImage;
+  final String playerName;
+
+  HighScoreCard({required this.rankImage, required this.playerName});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 200, // Lebar card
+      height: 300, // Tinggi card
+      child: Card(
+        elevation: 5,
+        margin: EdgeInsets.all(10),
+        child: SingleChildScrollView( // Tambahkan SingleChildScrollView di sini
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  rankImage,
+                  height: 50, // Ubah tinggi gambar di sini
+                  width: 50, // Ubah lebar gambar di sini
+                ), // Tambahkan gambar peringkat di sini
+                SizedBox(height: 5), // Ruang kosong vertikal
+                Divider(), // Pembatas garis
+                SizedBox(height: 5), // Ruang kosong vertikal
+                Text(playerName),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
