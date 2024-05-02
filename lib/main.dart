@@ -137,7 +137,11 @@ class TutorialCard extends StatelessWidget {
             Divider(),
             SizedBox(height: 10),
             Text(
-              '1. Game akan menampilkan 5 gambar secara acak dan bergantian dan diingat oleh pemain\n',
+              '1. Pertama kali game akan menampilkan 5 gambar secara acak dan bergantian dan harus diingat oleh pemain\n'+
+              '2.  sistem akan menampilkan 4 opsi gambar yang harus ditebak oleh user. Salah satu dari 4 opsi yang tersedia merupakan\n'+
+              'gambar yang harus diingat pemain, sedangkan 3 gambar lainnya hanyalah pengecoh/tipuan\n'+
+              '3. Setiap pertanyaan hanya diberikan waktu 30 detik dan jika waktu habis maka akan menampilkan pertanyaan selanjutnya\n'+
+              '4. Jawaban benar akan bernilai 1 point dan jika salah maka bernilai 0 point',
               style: TextStyle(fontSize: 16),
             ),
             SizedBox(height: 10),

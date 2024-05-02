@@ -234,7 +234,7 @@ class _GameState extends State<Game> {
           child: Column(
         children: <Widget>[
           CircularPercentIndicator(
-            radius: 120.0,
+            radius: 80.0,
             lineWidth: 20.0,
             percent: 1 - (_hitung / _maxTime),
             center: Text(formatTime(_hitung)),
